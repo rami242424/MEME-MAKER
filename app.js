@@ -5,18 +5,12 @@ const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
 
-// 몸통과 팔 
-ctx.fillRect(210 - 40, 200 - 30, 15, 100);
-ctx.fillRect(350 - 40, 200 - 30, 15, 100);
-ctx.fillRect(260 - 40, 200 - 30, 60, 200);
+ctx.lineWidth = 2;
 
-// 머리
-ctx.arc(250, 100, 50, 0, 2 * Math.PI);
-ctx.fill();
+function onClick(event){
+    // console.log(event); // 콘솔로 클릭한 좌표값은 offsetX,Y라는 것을 알 수 있다.
+    ctx.lineTo(event.offsetX, event.offsetY);
+    ctx.stroke();
+}
 
-// 눈
-ctx.beginPath();
-ctx.fillStyle = 'white';
-ctx.arc(265, 80, 8, Math.PI, 2 * Math.PI);
-ctx.arc(235, 80, 8, Math.PI, 2 * Math.PI);
-ctx.fill();
+canvas.addEventListener("click", onClick);
