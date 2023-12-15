@@ -1,13 +1,13 @@
+const color = document.getElementById("color");
+const lineWidth =  document.getElementById('line-width');
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
 canvas.width = 800;
 canvas.height = 800;
-ctx.lineWidth = 2;
-let isPainting = false; 
+ctx.lineWidth = lineWidth.value; 
 
-// 만약 isPainting이 true면, ctx.lineTo, stroke를 써서 선을 그리고 함수를 끝내준다.
-// 만약 isPainting이 false면, ctx.moveTo 브러쉬만 움직여준다.
+let isPainting = false; 
 
 function onMove(event) {
     if(isPainting){
@@ -18,14 +18,31 @@ function onMove(event) {
     ctx.moveTo(event.offsetX, event.offsetY);
 }
 
-// 마우스를 눌렀을 떄 유저가 그리고 싶어하는걸 그리게 해주자-> isPainting이라는 변수를 만들자.
-function onMouseDown() {
-    isPainting = true; // 마우스를 누르면(mouseDown) true가 된다.
+function startPainting() {
+    isPainting = true; 
 }
 
-function onMouseUp(){
+function cancelPainting(){
     isPainting = false;
+    ctx.beginPath(); 
 }
+
+function onLineWidthChange(event){
+    ctx.lineWidth = event.target.value;
+}
+
+function onColorChange(event){
+    // console.log(event.target.value); // 선택한 색상이 콘솔에 잘 뜨는지 확인
+    // fillColor : 사각형을 만들면, 그 안을 채워주는 색상
+    // strokeColor : 라인(선)에서 쓰임
+    ctx.strokeStyle = event.target.value;
+    ctx.fillStyle = event.target.value;
+}
+
 canvas.addEventListener("mousemove", onMove);
-canvas.addEventListener("mousedown", onMouseDown);
-canvas.addEventListener("mouseup", onMouseUp);
+canvas.addEventListener("mousedown", startPainting);
+canvas.addEventListener("mouseup", cancelPainting);
+canvas.addEventListener("mouseleave", cancelPainting);
+
+lineWidth.addEventListener("change", onLineWidthChange);
+color.addEventListener("change", onColorChange);
