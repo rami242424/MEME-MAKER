@@ -6,9 +6,9 @@ canvas.width = 800;
 canvas.height = 800;
 
 ctx.lineWidth = 2;
-ctx.moveTo(0, 0); // 선이 모서리에서 시작되도록 하기
 
 function onClick(event){
+    ctx.moveTo(0, 0);
     ctx.lineTo(event.offsetX, event.offsetY);
     ctx.stroke();
 }
