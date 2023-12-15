@@ -13,4 +13,4 @@ function onClick(event){
     ctx.stroke();
 }
 
-canvas.addEventListener("click", onClick);
+canvas.addEventListener("mousemove", onClick); // click > mousemove로 바꿈으로써 클릭이 아닌 마우스를 움직이므로써 그림이 그려지게 한다.
