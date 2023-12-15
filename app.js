@@ -1,31 +1,31 @@
 const canvas = document.querySelector("canvas");
-// context(ctx)는 = paint brush 역할
 const ctx = canvas.getContext("2d");
 
 canvas.width = 800;
 canvas.height = 800;
 ctx.lineWidth = 2;
+let isPainting = false; 
 
-// 색을 array로 만들어보자(움직일때마다, 새로운 선을 그릴떄 마다 색이 달라지게)
-const colors = [
-    "#ff3838",
-    "#ffb8b8",
-    "#c56cf0",
-    "#ff9f1a",
-    "#fff200",
-    "#32ff7e",
-    "#7efff5",
-    "#18dcff",
-    "#7d5fff",
-]
+// 만약 isPainting이 true면, ctx.lineTo, stroke를 써서 선을 그리고 함수를 끝내준다.
+// 만약 isPainting이 false면, ctx.moveTo 브러쉬만 움직여준다.
 
-function onClick(event){
-    ctx.beginPath(); // 모든 선의 경로를 매번 바꿔주기
-    ctx.moveTo(0, 0);
-    const color = colors[Math.floor(Math.random() * colors.length)]
-    ctx.strokeStyle = color;
-    ctx.lineTo(event.offsetX, event.offsetY);
-    ctx.stroke();
+function onMove(event) {
+    if(isPainting){
+        ctx.lineTo(event.offsetX, event.offsetY);
+        ctx.stroke();
+        return;
+    }
+    ctx.moveTo(event.offsetX, event.offsetY);
 }
 
-canvas.addEventListener("mousemove", onClick); 
+// 마우스를 눌렀을 떄 유저가 그리고 싶어하는걸 그리게 해주자-> isPainting이라는 변수를 만들자.
+function onMouseDown() {
+    isPainting = true; // 마우스를 누르면(mouseDown) true가 된다.
+}
+
+function onMouseUp(){
+    isPainting = false;
+}
+canvas.addEventListener("mousemove", onMove);
+canvas.addEventListener("mousedown", onMouseDown);
+canvas.addEventListener("mouseup", onMouseUp);
