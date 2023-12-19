@@ -1,5 +1,6 @@
 const modeBtn = document.getElementById("mode-btn");
 const destroyBtn = document.getElementById("destroy-btn");
+const eraserBtn = document.getElementById("eraser-btn");
 const colorOptions = Array.from(
     document.getElementsByClassName("color-option")
 );
@@ -79,6 +80,14 @@ function OnDestroyClick(){
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
+// erase 기능 활성화
+function onEraserClick(){
+    ctx.strokeStyle = "white";
+    // fill 모드일때 erase를 선택하면, 다시 그리기 모드로 바꿔주기(노이해)
+    isFilling = false;
+    modeBtn.innerText = "Fill";
+}
+
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
@@ -94,3 +103,4 @@ colorOptions.forEach((color) => color.addEventListener("click", onColorClick));
 
 modeBtn.addEventListener("click", onModeClick);
 destroyBtn.addEventListener("click", OnDestroyClick);
+eraserBtn.addEventListener("click", onEraserClick);
