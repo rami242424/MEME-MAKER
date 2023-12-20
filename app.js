@@ -91,11 +91,20 @@ function onEraserClick(){
 
 function onFileChange(event){
     // console.dir(event.target); // input 확인해보기
-    const file = event.target.files[0];
-    const url = URL.createObjectURL(file);
-    console.log(url);
+    const file = event.target.files[0]; // 1. 자바스크립트를 이용하여 업로드한 파일을 가져오고
+    const url = URL.createObjectURL(file); // 2. 그 파일을 가리키는 URL을 얻고
+    // console.log(url); // 3. 그 URL을 콘솔에 띄우기
+    const image = new Image() // 4. 이미지를 만들기 === html에서 <img src=""/> 로 쓰이는것 과 같다.
+    image.src = url // 5. 브라우저의 메모리를 가리키는 URL을 넣어주기
+    image.onload = function(){ // 6. drawimage()라는 ctx.method 호출하기
+        ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        // 이미지 크기를 CANVAS_WIDTH CANVAS_HEIGHT로 입력함으로써 캔버스 크기에 사진을 꽉 채우기
+        // 7.이미지를 그릴때 file input을 비우기
+        fileInput.value = null;
+    }
 }
 
+// canvas.onmousemove = onMove; 아래 addEvent방법과 같다.
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
