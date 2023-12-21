@@ -1,3 +1,4 @@
+const textInput = document.getElementById("text");
 const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn");
 const destroyBtn = document.getElementById("destroy-btn");
@@ -104,6 +105,16 @@ function onFileChange(event){
     }
 }
 
+function onDoubleClick(event){
+    // console.log(event.offsetX, event.offsetY); // 마우스가 클릭한 canvas 내부좌표
+    const text = textInput.value;
+    ctx.lineWidth = 1; // text가 잘보이게(숫자가 lineWidth가 크면 stroke된 글자가 잘안보인다)
+    ctx.strokeText(text, event.offsetX, event.offsetY);
+    
+
+}
+
+canvas.addEventListener("dblclick", onDoubleClick);
 // canvas.onmousemove = onMove; 아래 addEvent방법과 같다.
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
