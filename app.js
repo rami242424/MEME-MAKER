@@ -106,10 +106,12 @@ function onFileChange(event){
 }
 
 function onDoubleClick(event){
+    const text = textInput.value;
+    if (text !== "") {
+
     ctx.save(); // ctx의 현재상태, 색상, 스타일 등 모든 것을 "저장함-1"
 
     // console.log(event.offsetX, event.offsetY); // 마우스가 클릭한 canvas 내부좌표
-    const text = textInput.value;
     ctx.lineWidth = 1; // text가 잘보이게(숫자가 lineWidth가 크면 stroke된 글자가 잘안보인다) "수정-2"
     ctx.font = "48px serif";
     
@@ -120,7 +122,7 @@ function onDoubleClick(event){
 
     ctx.restore();// "수정 완료후 이전에 저장된 상태로 돌아가기-3"
     //==>> 즉 save와 restore 사이에서는 어떤 수정을 하던 저장되지 않는다.
-
+    }
 }
 
 canvas.addEventListener("dblclick", onDoubleClick);
