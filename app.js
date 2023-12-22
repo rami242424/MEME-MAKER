@@ -1,3 +1,4 @@
+const saveBtn = document.getElementById("save");
 const textInput = document.getElementById("text");
 const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn");
@@ -125,6 +126,17 @@ function onDoubleClick(event){
     }
 }
 
+// 현재 캔버스안에 있는 이미지 저장하기
+function onSaveClick(){
+    // console.log(canvas.toDataURL());
+    const url = canvas.toDataURL();
+    // <a href=""/> jvs 버전으로 아래에 입력
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "myDrawing.png"
+    a.click();
+}
+
 canvas.addEventListener("dblclick", onDoubleClick);
 // canvas.onmousemove = onMove; 아래 addEvent방법과 같다.
 canvas.addEventListener("mousemove", onMove);
@@ -144,3 +156,4 @@ modeBtn.addEventListener("click", onModeClick);
 destroyBtn.addEventListener("click", OnDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change", onFileChange);
+saveBtn.addEventListener("click", onSaveClick);
