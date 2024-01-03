@@ -5,6 +5,11 @@ const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
 
-ctx.moveTo(50, 50); // 브러쉬 시작점
-ctx.lineTo(150, 50); // 기존 x:50>150, y:50>50 으로 줄을 긋다.
-ctx.fill(); // 선으로 채운다.
+ctx.moveTo(50, 50);
+ctx.lineTo(150, 50);
+ctx.lineTo(150, 150);
+ctx.lineTo(50, 150);
+ctx.lineTo(50, 50);
+
+ctx.stroke();
+// ctx.fill();
