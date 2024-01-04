@@ -5,18 +5,22 @@ const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
 
-ctx.moveTo(200, 200);
-ctx.fillRect(200, 200, 50, 200);
-ctx.fillRect(400, 200, 50, 200);
-ctx.lineWidth = 3;
+// 양팔
+ctx.fillRect(215 - 40, 200 - 50, 15, 100);
+ctx.fillRect(350 - 40, 200 - 50, 15, 100);
 
-// 문
-ctx.fillRect(300, 300, 50, 100);
+// 몸통
+ctx.fillRect(260 - 40, 200 - 50, 60, 200);
 
-// 천장
-ctx.fillRect(200, 200, 200, 5);
-// 지붕
-ctx.moveTo(200, 200);
-ctx.lineTo(325, 100);
-ctx.lineTo(450, 200);
+// 머리
+ctx.arc(250, 100, 50, 0, 2 * Math.PI)
+ctx.fill();
+
+// 눈
+ctx.beginPath();
+ctx.fillStyle = "white";
+ctx.arc(270, 80, 5, 0, 2 * Math.PI);
+ctx.arc(230, 80, 5, 0, 2 * Math.PI);
+ctx.moveTo(250, 110);
+ctx.arc(250, 110, 10, 0, 1 * Math.PI);
 ctx.fill();
