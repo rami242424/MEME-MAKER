@@ -7,4 +7,8 @@ canvas.width = 800;
 canvas.height = 800;
 // ctx.fillRect(50, 50, 100, 200);
 ctx.rect(50, 50, 100, 100); // 선만 만들고 색은 적용하지 않았음
-ctx.stroke();
+// ctx.stroke(); // 비로서 선에 색이 적용되어 사각형이 나타남
+// or
+// ctx.fill(); // 사각형안을 채움
+
+
