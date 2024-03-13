@@ -6,11 +6,22 @@ const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
 
-ctx.moveTo(50, 50); // 시작점은 x축 50, y축 50으로 옮긴다.
-ctx.lineTo(150, 50); // x축은 50>150, y축은 50>50 까지 선을 그어준다.
-ctx.lineTo(150, 150);
-ctx.lineTo(50, 150);
-ctx.lineTo(50, 50);
-ctx.stroke();
+//fillRect을 쓴다는 것은 지름길(shortcut) function을 쓴다는 것이고, fill과 rect을 호출한다는 것을 의미한다.
+// 1. 양쪽 벽만들기
+ctx.fillRect(200, 200, 50, 200);
+ctx.fillRect(400, 200, 50, 200);
 
+// 2. 문 만들기
+ctx.lineWidth = 2;
+ctx.fillRect(300, 300, 50, 100); // 문의 윤곽선 만들고 채워주기
+// ctx.lineWidth = 2; // 선의 너비를 먼저 바꿔주고 stroke를 해야 적용된다! 잊지말자!
+
+// 3. 지붕 만들기
+// 3-1 천장 만들기
+ctx.fillRect(200, 200, 200, 20);
+// 3-2 삼각지붕 만들기
+ctx.moveTo(200, 200);
+ctx.lineTo(325, 100);
+ctx.lineTo(450, 200);
+ctx.fill();
 
