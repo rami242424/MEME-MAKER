@@ -6,22 +6,29 @@ const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
 
-//fillRect을 쓴다는 것은 지름길(shortcut) function을 쓴다는 것이고, fill과 rect을 호출한다는 것을 의미한다.
-// 1. 양쪽 벽만들기
-ctx.fillRect(200, 200, 50, 200);
-ctx.fillRect(400, 200, 50, 200);
+// 1. 몸통과 팔
+ctx.fillRect(205, 200, 15, 100); // 팔1
+ctx.fillRect(350, 200, 15, 100); // 팔2
+ctx.fillRect(260, 200, 50, 200) // 몸통
 
-// 2. 문 만들기
-ctx.lineWidth = 2;
-ctx.fillRect(300, 300, 50, 100); // 문의 윤곽선 만들고 채워주기
-// ctx.lineWidth = 2; // 선의 너비를 먼저 바꿔주고 stroke를 해야 적용된다! 잊지말자!
-
-// 3. 지붕 만들기
-// 3-1 천장 만들기
-ctx.fillRect(200, 200, 200, 20);
-// 3-2 삼각지붕 만들기
-ctx.moveTo(200, 200);
-ctx.lineTo(325, 100);
-ctx.lineTo(450, 200);
+// 2. 머리
+ctx.arc(285, 150, 50, 0, 2 * Math.PI);
 ctx.fill();
 
+// 3. 눈
+ctx.beginPath();
+ctx.fillStyle = 'white';
+ctx.arc(270, 140, 7, 0, 2 * Math.PI);
+ctx.arc(300, 140, 7, 0, 2 * Math.PI);
+ctx.fill();
+
+// 4. 입
+ctx.beginPath();
+// ctx.strokeStyle = 'red';
+ctx.fillStyle = 'red';
+ctx.moveTo(270, 170);
+ctx.lineTo(300, 170);
+ctx.lineTo(285, 190);
+ctx.lineTo(270, 170);
+// ctx.stroke();
+ctx.fill();
