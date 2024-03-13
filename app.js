@@ -5,10 +5,12 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
-// ctx.fillRect(50, 50, 100, 200);
-ctx.rect(50, 50, 100, 100); // 선만 만들고 색은 적용하지 않았음
-// ctx.stroke(); // 비로서 선에 색이 적용되어 사각형이 나타남
-// or
-// ctx.fill(); // 사각형안을 채움
+
+ctx.moveTo(50, 50); // 시작점은 x축 50, y축 50으로 옮긴다.
+ctx.lineTo(150, 50); // x축은 50>150, y축은 50>50 까지 선을 그어준다.
+ctx.lineTo(150, 150);
+ctx.lineTo(50, 150);
+ctx.lineTo(50, 50);
+ctx.stroke();
 
 
