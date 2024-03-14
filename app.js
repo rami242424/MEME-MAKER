@@ -31,16 +31,17 @@ function onMove(event){
     ctx.moveTo(event.offsetX, event.offsetY);
 }
 
-function onMouseDown(){
+function startPainting(){
 // 마우스가 눌렸을 때 유저가 그리고 싶어하는걸 그리게 해주기
     isPainting = true
 }
 
-function onMouseUp(){
+function cancelPainting(){
     isPainting = false;
 }
 
 canvas.addEventListener('mousemove', onMove);
-canvas.addEventListener('mousedown', onMouseDown);
-canvas.addEventListener('mouseup', onMouseUp);
+canvas.addEventListener('mousedown', startPainting);
+canvas.addEventListener('mouseup', cancelPainting);
+canvas.addEventListener('mouseleave', cancelPainting);
 
