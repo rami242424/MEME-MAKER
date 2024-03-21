@@ -19,6 +19,7 @@ function onMove(event){
         ctx.stroke();
         return;
     }
+    // ctx.beginPath(); // 새롭게 선을 그어줌으로써 두께가 바꿔도 기존 선들의 두께는 바뀌지 않는다. -> 사용자가 마우스를 움직일 떄, 새로운 path를 시작하게 된다.
     ctx.moveTo(event.offsetX, event.offsetY);
 }
 
@@ -29,6 +30,7 @@ function startPainting(){
 
 function cancelPainting(){
     isPainting = false;
+    ctx.beginPath(); // 새롭게 선을 그어줌으로써 두께가 바꿔도 기존 선들의 두께는 바뀌지 않는다. -> 사용자가 마우스를 움직일 떄, 새로운 path를 시작하게 된다.=>>사용자가 페인팅을 마치면 새로운 path를 만들도록 한다. 위에 onMove funtion이나 여기 둘중에 한곳에서만 설정해도 된다.
 }
 
 // 그리고 항상 event에 접근할 수 있다는 사실이 중요하다.
@@ -38,6 +40,7 @@ function cancelPainting(){
 // }
 function onLineWidthChange(event){
     ctx.lineWidth = event.target.value;
+    // 선의 굵기는 바뀔 수 있지만 ctx.lineWidth를 계속 업데이트해서, 기존에 그려진 그림의 두께도 같이 바뀐다.
 }
 
 
