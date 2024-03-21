@@ -75,17 +75,19 @@ function onColorClick(event){
 // 2. 선을 그리거나
 function onModeClick(){
     if (isFilling) {
-        isFilling = false
-        modeBtn.innerText = "Fill"
+        isFilling = false;
+        modeBtn.innerText = "Fill";
     } else {
-        isFilling = true
-        modeBtn.innerText = "Draw"
+        isFilling = true;
+        modeBtn.innerText = "Draw";
     }
 }
 
 // Fill 모드에서 클릭시 전체 채우기
 function onCanvasClick(){
-    ctx.fillRect(0, 0, 800, 800);
+    if(isFilling){
+        ctx.fillRect(0, 0, 800, 800);
+    }
 }
 
 
