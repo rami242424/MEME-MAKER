@@ -1,4 +1,6 @@
 const modeBtn = document.getElementById("mode-btn");
+const destroyBtn = document.getElementById("destroy-btn");
+
 
 // const colorOptions = document.getElementsByClassName("color-option");
 // colorOption을 배열로 만들어 이벤트리스너를 만들어 주기위해 아래 과정 필요
@@ -13,8 +15,13 @@ const canvas = document.querySelector("canvas");
 // context(ctx) = brush => 뭐든 그릴 수 있다. 그림을 그릴때 사용한다.
 // const context = canvas.getContext("2d");
 const ctx = canvas.getContext("2d");
-canvas.width = 800;
-canvas.height = 800;
+
+// 중복 방지를 위해
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 800;
+
+canvas.width = CANVAS_WIDTH;
+canvas.height = CANVAS_HEIGHT;
 
 ctx.lineWidth = lineWidth.value;
 let isPainting = false; 
@@ -58,13 +65,6 @@ function onColorChange(event){
 
 // 어떤 컬러가 클릭됐는지 알기위해 만드는 함수
 function onColorClick(event){
-    // console.dir(event.target.dataset.color);
-    // 1 또는 2
-    // ctx.strokeStyle = event.target.dataset.color;
-    // ctx.fillStyle = event.target.dataset.color;
-    // color.value = event.target.dataset.color;
-
-    // 2
     const colorValue = event.target.dataset.color;
     ctx.strokeStyle = colorValue;
     ctx.fillStyle = colorValue;
@@ -86,8 +86,14 @@ function onModeClick(){
 // Fill 모드에서 클릭시 전체 채우기
 function onCanvasClick(){
     if(isFilling){
-        ctx.fillRect(0, 0, 800, 800);
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     }
+}
+
+// destroy란 하얀색깔을 선택하고+채우기모드로 바꿔서 클릭하는 것과 같은 동작이다.
+function onDestroyClick(){
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
 
@@ -104,3 +110,4 @@ color.addEventListener("change", onColorChange);
 colorOptions.forEach(color => color.addEventListener("click", onColorClick));
 
 modeBtn.addEventListener("click", onModeClick);
+destroyBtn.addEventListener("click", onDestroyClick);
