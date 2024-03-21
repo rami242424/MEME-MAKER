@@ -1,3 +1,9 @@
+// const colorOptions = document.getElementsByClassName("color-option");
+// colorOption을 배열로 만들어 이벤트리스너를 만들어 주기위해 아래 과정 필요
+const colorOptions = Array.from(
+    document.getElementsByClassName("color-option")
+);
+
 const color = document.getElementById("color");
 const lineWidth = document.getElementById("line-width");
 const canvas = document.querySelector("canvas");
@@ -47,6 +53,13 @@ function onColorChange(event){
     ctx.fillStyle = event.target.value;
 }
 
+// 어떤 컬러가 클릭됐는지 알기위해 만드는 함수
+function onColorClick(event){
+    // console.dir(event.target.dataset.color);
+    ctx.strokeStyle = event.target.dataset.color;
+    ctx.fillStyle = event.target.dataset.color;
+}
+
 canvas.addEventListener('mousemove', onMove);
 canvas.addEventListener('mousedown', startPainting);
 canvas.addEventListener('mouseup', cancelPainting);
@@ -54,3 +67,6 @@ canvas.addEventListener('mouseleave', cancelPainting);
 
 lineWidth.addEventListener("change", onLineWidthChange);
 color.addEventListener("change", onColorChange);
+
+// 각 컬러마다 이벤트리스너를 추가하기 위해 만들어줌 => 아래 함수는 color를 클릭할 때마다 호출된다.
+colorOptions.forEach(color => color.addEventListener("click", onColorClick));
