@@ -1,3 +1,5 @@
+const modeBtn = document.getElementById("mode-btn");
+
 // const colorOptions = document.getElementsByClassName("color-option");
 // colorOption을 배열로 만들어 이벤트리스너를 만들어 주기위해 아래 과정 필요
 const colorOptions = Array.from(
@@ -16,6 +18,7 @@ canvas.height = 800;
 
 ctx.lineWidth = lineWidth.value;
 let isPainting = false; 
+let isFilling = false;
 
 function onMove(event){
     if(isPainting) {
@@ -68,13 +71,34 @@ function onColorClick(event){
     color.value = colorValue;
 }
 
+// 1. 캔버스 전체를 채우거나
+// 2. 선을 그리거나
+function onModeClick(){
+    if (isFilling) {
+        isFilling = false
+        modeBtn.innerText = "Fill"
+    } else {
+        isFilling = true
+        modeBtn.innerText = "Draw"
+    }
+}
+
+// Fill 모드에서 클릭시 전체 채우기
+function onCanvasClick(){
+    ctx.fillRect(0, 0, 800, 800);
+}
+
+
 canvas.addEventListener('mousemove', onMove);
 canvas.addEventListener('mousedown', startPainting);
 canvas.addEventListener('mouseup', cancelPainting);
 canvas.addEventListener('mouseleave', cancelPainting);
+canvas.addEventListener('click', onCanvasClick);
 
 lineWidth.addEventListener("change", onLineWidthChange);
 color.addEventListener("change", onColorChange);
 
 // 각 컬러마다 이벤트리스너를 추가하기 위해 만들어줌 => 아래 함수는 color를 클릭할 때마다 호출된다.
 colorOptions.forEach(color => color.addEventListener("click", onColorClick));
+
+modeBtn.addEventListener("click", onModeClick);
