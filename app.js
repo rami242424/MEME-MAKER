@@ -33,9 +33,13 @@ function cancelPainting(){
 
 // 그리고 항상 event에 접근할 수 있다는 사실이 중요하다.
 // 왜냐면 event는 우리에게 input의 새로운 value(값)을 알려준다.
+// function onLineWidthChange(event){
+//     console.log(event.target.value);
+// }
 function onLineWidthChange(event){
-    console.log(event.target.value);
+    ctx.lineWidth = event.target.value;
 }
+
 
 canvas.addEventListener('mousemove', onMove);
 canvas.addEventListener('mousedown', startPainting);
