@@ -116,6 +116,9 @@ function onFileChange(event){
     const url = URL.createObjectURL(file); // 브라우저의 메모리에서 파일의 url 얻어오기
     // console.log(url);
     const image = new Image();
+    // 위에 표현과 같은 표현
+    // document.createElement("img");
+
     image.src = url;
     image.onload = function () {
         ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
