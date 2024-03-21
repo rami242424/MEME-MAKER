@@ -1,3 +1,4 @@
+const color = document.getElementById("color");
 const lineWidth = document.getElementById("line-width");
 const canvas = document.querySelector("canvas");
 
@@ -9,9 +10,6 @@ canvas.height = 800;
 
 ctx.lineWidth = lineWidth.value;
 let isPainting = false; 
-ctx.moveTo(200, 200);
-ctx.lineTo(400, 400);
-ctx.stroke();
 
 function onMove(event){
     if(isPainting) {
@@ -43,6 +41,11 @@ function onLineWidthChange(event){
     // 선의 굵기는 바뀔 수 있지만 ctx.lineWidth를 계속 업데이트해서, 기존에 그려진 그림의 두께도 같이 바뀐다.
 }
 
+function onColorChange(event){
+    // console.log(event.target.value); // 색 변하면 잘 입력되는지 콘솔로 확인
+    ctx.strokeStyle = event.target.value;
+    ctx.fillStyle = event.target.value;
+}
 
 canvas.addEventListener('mousemove', onMove);
 canvas.addEventListener('mousedown', startPainting);
@@ -50,3 +53,4 @@ canvas.addEventListener('mouseup', cancelPainting);
 canvas.addEventListener('mouseleave', cancelPainting);
 
 lineWidth.addEventListener("change", onLineWidthChange);
+color.addEventListener("change", onColorChange);
