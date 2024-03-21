@@ -1,3 +1,4 @@
+const saveBtn = document.getElementById("save");
 const textInput = document.getElementById("text");
 const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn");
@@ -135,6 +136,18 @@ function onDoulbleClick(event){
     }
     
 }
+
+// 캔버스 안에 있는 이미지를 저장하기
+function onSaveClick(){
+    // console.log(canvas.toDataURL());
+    const url = canvas.toDataURL();
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "myDrawing.png";
+    a.click();
+}
+
+
 canvas.addEventListener("dblclick", onDoulbleClick);
 canvas.addEventListener('mousemove', onMove);
 canvas.addEventListener('mousedown', startPainting);
@@ -152,3 +165,4 @@ modeBtn.addEventListener("click", onModeClick);
 destroyBtn.addEventListener("click", onDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change", onFileChange);
+saveBtn.addEventListener("click", onSaveClick);
