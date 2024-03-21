@@ -56,8 +56,16 @@ function onColorChange(event){
 // 어떤 컬러가 클릭됐는지 알기위해 만드는 함수
 function onColorClick(event){
     // console.dir(event.target.dataset.color);
-    ctx.strokeStyle = event.target.dataset.color;
-    ctx.fillStyle = event.target.dataset.color;
+    // 1 또는 2
+    // ctx.strokeStyle = event.target.dataset.color;
+    // ctx.fillStyle = event.target.dataset.color;
+    // color.value = event.target.dataset.color;
+
+    // 2
+    const colorValue = event.target.dataset.color;
+    ctx.strokeStyle = colorValue;
+    ctx.fillStyle = colorValue;
+    color.value = colorValue;
 }
 
 canvas.addEventListener('mousemove', onMove);
