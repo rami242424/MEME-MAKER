@@ -1,105 +1,134 @@
+const eraserBtn = document.getElementById("eraser-btn");
+const destroyBtn = document.getElementById("destroy-btn");
+const modeBtn = document.getElementById("mode-btn");
+const colorOptions = Array.from(
+    document.getElementsByClassName("color-option")
+); // htmlCollection > 자바스크립트 배열로 만들기
+const color = document.getElementById("color");
+const lineWidth = document.getElementById("line-width");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
 // 이미지의 퀄리티를 높이기 위해서 width와 height는 자바스크립트에서만 수정한다.(not css)
-canvas.width = 800;
-canvas.height = 800;
+// canvas.width = 800;
+// canvas.height = 800;
 
-// 1. 좌표는 ctx의 맨 상단에서 (0, 0) 시작된다.
-// ctx.strokeStyle = "blue";
-// ctx.strokeRect(0, 0, 100, 100);
-// ctx.fillRect(0, 0, 20, 20);
-// ctx.fillRect(40, 40, 20, 20);
+// 중복통일
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 800;
+canvas.width = CANVAS_WIDTH;
+canvas.height = CANVAS_HEIGHT;
 
-// 2. fillStyle은 fill전에 정의해주기
-// ctx.rect(50, 50, 100, 100);
-// ctx.rect(150, 150, 100, 100);
-// ctx.rect(250, 250, 100, 100);
-// ctx.fillStyle = "red"; // 사각형 = red
-// ctx.fill();
-// ctx.fillStyle = "red"; // 사각형 = black
+ctx.lineWidth = lineWidth.value; // 5
 
-// 3. 2개의 사각형만 존재 > 1초뒤 +1사각형+ 전체 red로 변경
-// ctx.rect(50, 50, 100, 100);
-// ctx.rect(150, 150, 100, 100);
-// ctx.fill();
-// ctx.beginPath(); // 마지막 사각형 색만 red로
-// ctx.rect(250, 250, 100, 100);
-// ctx.fillStyle = "red";
-// setTimeout(() => {
-//    ctx.fill(); 
-// }, 3000);
-
-// 4. shortcut rect을 쓰지 않고, moveTo lineTo로 그리기
-// ctx.moveTo(50, 50);
-// ctx.lineTo(150, 50);
-// ctx.lineTo(150, 150);
-// ctx.lineTo(50, 150);
-// ctx.lineTo(50, 50);
+// 8.1
+// ctx.moveTo(200, 200); // 선을 긋지 않으면 브러쉬를 움직이기만 함
+// ctx.lineTo(400, 400);
 // ctx.stroke();
 
-// 5. 집만들기
-// ctx.fillRect(200, 200, 50, 200);
-// ctx.fillRect(400, 200, 50, 200);
-// ctx.lineWidth = 2;
-// ctx.fillRect(300, 300, 50, 100);
-// ctx.fillRect(200, 200, 200, 20);
-// ctx.moveTo(200, 200);
-// ctx.lineTo(325, 100);
-// ctx.lineTo(450, 200)
-// ctx.fill();
+// 8.2
+let isPainting = false;
+let isFilling = false;
 
-// 6. 캐릭터 만들기
-// ctx.fillRect(200, 200, 15, 100);
-// ctx.fillRect(365, 200, 15, 100);
-// ctx.fillRect(260, 200, 60, 200);
-
-// ctx.arc(290, 130, 70, 0, 2 * Math.PI);
-// ctx.fill();
-
-// ctx.beginPath();
-// ctx.arc(260, 120, 10, 0, 2 * Math.PI);
-// ctx.arc(320, 120, 10, 0, 2 * Math.PI);
-// ctx.fillStyle = "white";
-// ctx.fill();
-
-// ctx.beginPath();
-// ctx.moveTo(300, 150);
-// ctx.lineTo(400, 180);
-// ctx.lineTo(400, 185);
-// ctx.lineTo(300, 155);
-// ctx.lineTo(300, 150);
-// ctx.fillStyle = "red";
-// ctx.fill();
-
-// ctx.beginPath();
-// ctx.moveTo(280, 170);
-// ctx.lineTo(310, 170);
-// ctx.arc(295, 170, 15, 0, 1* Math.PI);
-// ctx.fillStyle = "blue";
-// ctx.fill();
-
-// 7. 보드를 클릭할 떄마다()
-ctx.lineWidth = 2;
-const colors = [
-    "#ff3838",
-    "#ffb8b8",
-    "#c56cf0",
-    "#ff9f1a",
-    "#fff200",
-    "#32ff7e",
-    "#7efff5",
-    ];
-    
-function onClick(event){
+// 마우스를 움직이고 + isPainting = true일때 그려지기
+function onMove(event){
+    if (isPainting) {
+        ctx.lineTo(event.offsetX, event.offsetY)
+        ctx.stroke();
+        return;
+    } 
     ctx.beginPath();
-    ctx.moveTo(event.offsetX, event.offsetY);
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    ctx.strokeStyle = color;
-    ctx.lineTo(event.offsetX, event.offsetY);
-    ctx.stroke();
+    ctx.moveTo(event.offsetX, event.offsetY); // 브러쉬만 움직인다(그림x)
+}
+
+function startPainting(){
+    isPainting = true;
+}
+
+function cancelPainting(){
+    isPainting = false;
+}
+
+function onLineWidthChange(event){
+    // event는 input의 새로운 value값을 알려준다.
+    // console.log(event.target.value);
+    // ctx.beginPath(); // 이렇게 해도 되는데, onMove에 추가하자
+    ctx.lineWidth = event.target.value;
+}
+
+function onColorChange(event){
+    ctx.strokeStyle = event.target.value;
+    ctx.fillStyle = event.target.value;
+}
+
+// 어떤 color가 클릭됐는지 알아내보자.
+function onColorClick(event){
+    // console.dir(event.target.dataset.color);
+    // ctx.strokeStyle = event.target.dataset.color;
+    // ctx.fillStyle = event.target.dataset.color;
+    // color.value = event.target.dataset.color;
+    // 중복 없애자.
+    const colorValue = event.target.dataset.color; 
+    ctx.strokeStyle = colorValue;
+    ctx.fillStyle = colorValue;
+    color.value = colorValue; // 사용자에게 선택한 색깔을 알려주기 위해 추가한것
+}
+
+// 캔버스를 채우거나 선을 그리는 것 선택하는 모드버튼
+// 만약 isFilling일때 버튼을 클릭하면 모드를 바꾸고 싶다는 의미
+// 그래서 isFilling은 false가 되고, 버튼 텍스트는 Fill로 바뀐다.
+// 만약 isFilling이 아닐떄 버튼을 클릭하면, 채우기 모드로 바꾸고 싶다는 의미
+// 그래서 isFilling은 true가 되고, 버튼 텍스트는 Draw로 바뀐다.
+
+function onModeClick(){
+    if (isFilling){
+        isFilling = false;
+        modeBtn.innerText = "Fill";
+    } else {
+        isFilling = true;
+        modeBtn.innerText = "Draw";
+    }
+}
+
+function onCanvasClick(){
+    if(isFilling){
+        ctx.fillRect(0, 0, CANVAS_HEIGHT, CANVAS_HEIGHT);
+
+    }
+}
+
+function onDestroyClick(){
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, CANVAS_HEIGHT, CANVAS_HEIGHT);
+}
+
+function onEraserClick(){
+    ctx.strokeStyle = "white";
+    isFilling = false;
+    modeBtn.innerText = "Fill";
 }
 
 
-// canvas.addEventListener("click", onClick);
-canvas.addEventListener("mousemove", onClick);
+canvas.addEventListener("mousemove", onMove);
+canvas.addEventListener("mousedown", startPainting);
+canvas.addEventListener("mouseup", cancelPainting);
+// 마우스를 누른채로 컨버스를 떠났다가 돌아오면 그대로 계속 그리는 상태가 된다.(버그)
+canvas.addEventListener("mouseleave", cancelPainting);
+canvas.addEventListener("click", onCanvasClick);
+
+lineWidth.addEventListener("change", onLineWidthChange);
+color.addEventListener("change", onColorChange);
+// console.log(colorOptions);
+
+// 각 color마다 이벤트리스너를 추가해주기, COLOR를 클릭할 때마다 호출될것임
+colorOptions.forEach(color => color.addEventListener("click", onColorClick)); 
+
+// -> 이렇게 querySelectorAll 을 사용해도 됨
+// const colorOptions = document.querySelectorAll("#color_option");
+// colorOptions.forEach((colorOption) => {
+// colorOption.addEventListener("click", clickColorOption);
+// });
+
+modeBtn.addEventListener("click", onModeClick);
+destroyBtn.addEventListener("click", onDestroyClick);
+eraserBtn.addEventListener("click", onEraserClick);
