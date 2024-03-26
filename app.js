@@ -1,3 +1,4 @@
+const textInput = document.getElementById("text");
 const fileInput = document.getElementById("file");
 const eraserBtn = document.getElementById("eraser-btn");
 const destroyBtn = document.getElementById("destroy-btn");
@@ -118,9 +119,22 @@ function onFileChange(event){
     image.src = url;
     image.onload = function() {
         ctx.drawImage(image, 0, 0, CANVAS_HEIGHT, CANVAS_HEIGHT);
-        fileInput.value = null;
+        fileInput.value = null; // 사진을 업로드해도 파일이 선택되지 않았다고 나온다 => 다른 사진을 선택할 수 있다.
     };
 
+}
+
+function onDoubleClick(event){
+    const text = textInput.value;
+    if (text !== ""){
+        ctx.save(); // 저장
+        ctx.lineWidth = 1;
+        ctx.font = "48px serif";
+        ctx.strokeText(text, event.offsetX, event.offsetY);
+        // console.log(event.offsetX, event.offsetY); 
+        ctx.restore(); // 저장해뒀던 버전으로 되돌리기
+    }
+    
 }
 
 ////////////////////
@@ -130,6 +144,8 @@ canvas.onmousemove = function(){
 canvas.onmousemove = onMove // 1, 2 아래 코드와 같음
 //////////////////////
 canvas.addEventListener("mousemove", onMove);
+
+canvas.addEventListener("dblclick", onDoubleClick);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
 // 마우스를 누른채로 컨버스를 떠났다가 돌아오면 그대로 계속 그리는 상태가 된다.(버그)
