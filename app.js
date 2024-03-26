@@ -1,3 +1,4 @@
+const saveBtn = document.getElementById("save");
 const textInput = document.getElementById("text");
 const fileInput = document.getElementById("file");
 const eraserBtn = document.getElementById("eraser-btn");
@@ -22,6 +23,7 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
 ctx.lineWidth = lineWidth.value; // 5
+ctx.lineCap = "round";
 
 // 8.1
 // ctx.moveTo(200, 200); // 선을 긋지 않으면 브러쉬를 움직이기만 함
@@ -137,6 +139,17 @@ function onDoubleClick(event){
     
 }
 
+function onSaveClick(){
+    const url = canvas.toDataURL();
+    // console.log(canvas.toDataURL) // 그린 이미지를 url로 인코딩
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "myDrawing.png";
+    a.click();
+    // <a herf="" download/> 위에 코드와 같다
+}
+
+
 ////////////////////
 canvas.onmousemove = function(){
     onMove;
@@ -169,3 +182,4 @@ modeBtn.addEventListener("click", onModeClick);
 destroyBtn.addEventListener("click", onDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change", onFileChange);
+saveBtn.addEventListener("click", onSaveClick);
